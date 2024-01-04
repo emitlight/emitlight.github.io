@@ -1,1 +1,2 @@
-First try - Using clone from the remote repo \to the local repo.
+First try - Using clone from the remote repo to the local repo
+Second try - Updated file
