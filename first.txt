@@ -1,2 +1,3 @@
 First try - Using clone from the remote repo to the local repo
 Second try - Updated file
+Third try - Update from github.com to the local repo. Using git PULL. 
