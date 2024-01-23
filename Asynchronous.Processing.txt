@@ -1,0 +1,69 @@
+# 비동기 처리
+
+### 비동기
+(콜백함수, 프로미스, await&async, fetch)
+
+하나의 동작이 완료되지 않아도 다음 코드가 실행되는 것.
+프로그래밍이 순차적 진행되는 것과는 다르게 특정한 실행 순서를 제어한다.
+
+자바스크립트 : 싱글 스레드
+브라우저의 Web API : 멀티 스레드
+
+---
+
+**Web APIs**
+
+- DOM
+- AJAX(XMLHttpRequest)
+- Timeout(SetTimeout)
+
+**JS의 엔진** 중 **콜 스택**에 실행될 함수가 쌓인다. 비동기 실행 시, **Web API**를 호출하여 콜백 함수들을 **콜백 큐**에 추가하고 
+**이벤트 루프**는 **콜 스택**이 비면 **콜백 큐**의 함수를 콜 스택에 옮긴다. 
+이벤트 루프 + 콜백 큐가 콜 스택이 하나임에도 비동기 동작이 가능하게 한다.
+
+```jsx
+let response = fetch('mySnack.jpg');
+let snackImg = response.snackImg();
+```
+
+이 코드는 `mySnack.jpg`라는 이미지를 다운로드하고, `snackImg`라는 변수에 저장합니다.
+
+`fetch()` 함수는 지정된 URL에서 데이터를 가져옵니다. 이 경우 `mySnack.jpg`라는 이미지 파일을 가져옵니다.
+
+`response.snackImg()`는 `response` **객체**의 `snackImg()` 메서드를 호출합니다. 이 메서드는 `response` 객체의 이미지 **데이터**를 `**Buffer**` 객체로 반환합니다.
+
+따라서 `snackImg` 변수에는 `mySnack.jpg` 이미지의 **데이터**가 포함됩니다. 이 데이터를 사용하여 이미지를 표시하거나 다른 작업을 수행할 수 있습니다.
+
+```jsx
+// 예시코드
+const img = document.createElement('img');
+img.src = new URL('data:image/jpeg;base64' + snackImg.
+toString('base64'));
+document.body.appendChild(img);
+
+// 예시코드 2
+const width = snackImg.width;
+const height = snackImg.height;
+console.log(`이미지의 높이는 ${height}, 넓이는
+${width}입니다.`);
+```
+
+### 비동기 처리 종류
+
+- Promise : 응답에 관한 정보를 가진 **객체**.
+
+then, catch를 통해 결과 값 처리
+
+- await & async
+
+Promise 기반이지만 try-catch를 사용
+
+- fetch
+
+접근하고자 하는 URL과 매개변수를 통해 네트워크로 요청
+
+<aside>
+💡 JavaScript는 함수의 매개변수로 null과 undefined를 제외한 모든 자료형을 받을 수 있다.
+따라서, (1)함수의 매개변수로 **또 다른 함수**가 오는 것이 가능하다. 
+또한 (2)return될 수도 있다.
+</aside>
