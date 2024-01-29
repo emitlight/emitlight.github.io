@@ -134,3 +134,6 @@ String[] gender = {"여성", "남성"};
 인덱스를 통해 배열의 특정 요소에 접근할 수 있다.
 
 `System.out.println(gender[0]);` 결과값: “여성”
+### 자료형 타입을 확인하려면?
+
+`String(목적 자료형인지).class.isInstance();`
