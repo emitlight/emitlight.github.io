@@ -1,1 +1,99 @@
-ㅇㅇ
+# 46~) 데이터 타입 분류
+
+### 참조 타입: 배열, 열거, 클래스, 인터페이스
+
+참조 타입이란, **객체의 번지(주소)**를 참조하는 타입이다.
+
++) 기본 자료형의 크기는 각 자료형을 wrapper type으로 변환 후 `BYTES`메서드를 사용하여 확인 가능
+
+```java
+import java.lang.reflect.Field;
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println(Byte.BYTES);
+		System.out.println(Short.BYTES);
+		System.out.println(Character.BYTES);
+		System.out.println(Integer.BYTES);
+		System.out.println(Long.BYTES);
+		System.out.println(Float.BYTES);
+		System.out.println(Double.BYTES);
+	}
+}
+```
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e8f11927-b70c-4524-9227-a3efac08e7aa/5097987a-9c11-4a0c-852b-aff479ee440d/Untitled.png)
+
+> 객체는 데이터와 메소드로 구성된다.
+> 
+
+**메모리**
+
+**스택(변수)**: 기본 타입의 데이터, 참조 타입의 주소값
+
+**힙(객체)**: 참조 타입 변수의 실제 데이터
+
+**참조 타입 변수의 비교 연산**
+
+실제 데이터가 아닌 주소값을 비교하는 것이다.
+
+### null & NullPointerException
+
+NullPointerException: 참조 값이 없을 때 발생하는 오류
+
+“객체가 없다”
+
+- 참조 타입은 객체를 참조하여 사용하기 위한 목적으로 생성하기 때문에 주소값이 없으면 즉, 값이 null이면 예외가 발생한다.
+- 기본 타입에는 null 값을 넣을 수 없다.
+
+<aside>
+🔥 어떠한 변수도 객체를 참조하지 않을 때, 해당 객체는 GC에 의해 메모리 상에서 지워진다.
+
+</aside>
+
+### String 타입
+
+```java
+public class Class50{
+	public static void main(String[] args) {
+		String str1 = "홍길동";
+		String str2 = "홍길동";
+		System.out.println(str1 == str2); //true
+		
+
+		int[] intArr1 = {1,2,3,4};
+		int[] intArr2 = {1,2,3,4};
+		System.out.println(intArr1 == intArr2); //false
+	}
+}
+```
+
+**참조 타입의 비교 연산(==, ≠)**
+
+실제 데이터가 아닌 **주소값**을 비교하는 것이다.
+
+(String 리터럴은 같은 객체를 참조. 예외적인 경우이다.)
+
+하지만, 객체를 **새롭게 생성**하여 비교할 때는 false가 반환된다.
+
+메모리 주소가 달라지기 때문
+
+> 그러나, 사실상 문자열 내용의 동일여부를 판단하지, 객체 메모리 주소의 동일성을 판단할 일이 별로 없다. 따라서 `.equals()메서드`로 문자열 자체를 비교하는 경우가 많다.
+> 
+
+## 문자열의 조작(String 메서드)
+
+- chatAt(index)
+- length()
+- replace(”원래 문자열”, “바꿀 문자열”)
+    - String 객체는 **내용이 불변**이기 때문에 replace메서드를 사용하면 새로운 객체를 참조하여 보여주게 된다.
+- substring(시작 위치), substring(시작 위치, 끝 위치)
+- indexOf(”찾을 문자열”) : 반환값(-1: 없을 때, 있으면 문자열의 시작 **위치**)
+- contains() : boolean 값 반
+- split(”구분자”): 배열을 반환한다.
+
+### 배열
+
+같은 타입의 값을 연속적으로 저장
+
+크기(길이)는 불변하다.
