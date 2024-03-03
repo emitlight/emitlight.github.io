@@ -1,4 +1,4 @@
-# 58~67) Object Oriented Program
+# 58~69) Object Oriented Program
 
 객체는 속성(필드)과 동작(메서드)로 이루어진다.
 
