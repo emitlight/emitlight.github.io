@@ -75,7 +75,7 @@ public class MemberService {
 }
 
 ```
-
+> 16. 코드 참조조
 ```java
 
 public class Printer {
@@ -165,7 +165,50 @@ public class ShopService{
 > 19. 코드 참조
 ```java
 
+public class Account{
+  private int balance;
+  public static final int MIN_BALANCE = 0;
+  public static final int MAX_BALANCE = 1000000;
 
+  public int getBalance() {
+    return balance;  
+  }
+
+  public void setBalance(int balance) {
+    if(balance < MIN_BALANCE) {
+      return;
+    }
+    else if(balance > MAX_BALANCE) {
+      return;
+    }
+    else {
+      this.balance = balance;
+    }  
+  }
+
+  public static void main(String[] args) {
+    Account account = new Account();
+
+    account.setBalance(10000);
+    System.out.println("현재 잔고: " + account.getBalance()); //현재 잔고: 10000
+
+    account.setBalance(-100);
+    System.out.println("현재 잔고: " + account.getBalance()); //현재 잔고: 10000
+
+    account.setBalance(2000000);
+    System.out.println("현재 잔고: " + account.getBalance()); //현재 잔고: 10000
+
+    account.setBalance(300000);
+    System.out.println("현재 잔고: " + account.getBalance()); //현재 잔고: 300000
+  }
+
+}
 
 ```
 ![페이지 원본 이것이 자바다(확인문제-정답)_3쇄 - 복사본_6](https://github.com/emitlight/emitlight/assets/128894133/f4e005e6-c693-4638-a3f6-e42f47812dff)
+> 20. 코드 참조
+```java
+
+
+
+```
