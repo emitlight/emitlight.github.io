@@ -340,7 +340,7 @@ public class BankApplication{
     if(account == null) {
       System.out.println("결과: 계좌가 없습니다.");
       return;
-    } //❗ deposit() 메서드에 account 객체가 정의되어 있지 않아 보이지만, findAccount의 반환값이 account 객체이며
+    } //💛 deposit() 메서드에 account 객체가 정의되어 있지 않아 보이지만, findAccount의 반환값이 account 객체이며
       //이것이 deposit() 메서드의 account 객체에 할당된다. 그래서 사용할 수 있는 것이다.
     account.setBalance(account.getBalance() + money);
     System.out.println("결과: 예금 성공");
@@ -376,7 +376,7 @@ public class BankApplication{
           break;
         }
       }
-    } return account; //❗
+    } return account; //💛
   }
 
 }
