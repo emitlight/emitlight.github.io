@@ -1,4 +1,5 @@
 # Chapter 06 이론+실습
+#### 출처: https://www.hanbit.co.kr/store/books/look.php?p_code=B4861113361
 ![페이지 원본 이것이 자바다(확인문제-정답)_3쇄 - 복사본_1](https://github.com/emitlight/emitlight/assets/128894133/287801f2-a1a6-4774-86d1-1efdf6a2cc84)
 > 1. (3) | 클래스의 접근 제어자가 public이라면, 다른 패키지의 클래스에서도 객체 생성을 통해 해당 멤버에 접근할 수 있으므로 한 클래스에서 다수의 객체를 생성할 수 있다는 것을 알 수 있다.
 > 2. (4) | 로컬 변수는 해당 변수가 선언된 블록 내에서만 유효한 변수이다. 이 블록은 메서드, 생성자 또는 다른 코드 블록 중 하나일 수 있다.
@@ -209,6 +210,174 @@ public class Account{
 > 20. 코드 참조
 ```java
 
+public class Account{
+  //필드에 직접 접근하는 초기화 보호
+  private String accountNum;
+  private String owner;
+  private int balance;
 
+  //생성자로 필드 값을 입력받아서 초기화한다.
+  public Account(String accountNum, String owner, int balance) {
+    this.accountNum = accountNum;
+    this.owner = owner;
+    this.balance = balance;
+  }
 
+  //각 필드에 getter와 setter메서드 선언
+  public String getAccountNum() {
+    return accountNum;
+  }
+  public void setAccountNum(String accountNum) {
+    this.accountNum = accountNum;
+  }
+
+  public String getOwner() {
+    return owner;
+  }
+  public void setOwner(String owner) {
+    this.owner = owner;
+  }
+
+  public int getBalance() {
+    return balance;
+  }
+  public void setBalance(int balance) {
+    this.balance = balance;
+  }
+}
+
+```
+```java
+
+public class BankApplication{
+  //Account 객체를 길이가 100인 배열에서 관리, 100개의 요소 모두가 null로 초기화되어 있다.
+  private static Account[] accountArray = new Account[100];
+  private static Scanner scanner = new Scanner(System.in); //정적 필드로 Scanner 객체 생성
+
+  public static void main(String[] args) {
+    boolean run = true; //지역 변수 선언
+    while(run) {
+      System.out.println("--------------------------------------");
+      System.out.println("1.계좌생성 | 2.계좌목록 | 3.금 | 4.출금 | 5.종료");
+      System.out.println("--------------------------------------");
+      System.out.print("선택> ");
+
+      int option = Integer.parseInt(scanner.nextLine());
+      if(option == 1) { //옵션을 입력받아서 while문이 실행되는 동안 각 메서드가 작동하게 한다.
+        createAccount(); 
+      }  else if(option == 2) {
+          accountList();
+      }  else if(option == 3) {
+          deposit();
+      } else if(option == 4) {
+          withdraw();
+      } else if(option == 5) {
+          run = false;
+          System.out.println("프로그램 종료");
+      }
+    }
+  }
+  //1.계좌생성
+  private static void createAccount() {
+    System.out.println("----------");
+    System.out.println("계좌생성");
+    System.out.println("----------");
+
+    System.out.println("계좌번호: ");
+    String accountNum = scanner.nextLine(); //createAccount 메서드의 지역변수 선언
+
+    System.out.println("계좌주: ");
+    String owner = scanner.nextLine();
+
+    System.out.println("초기입금액: ");
+    int balance = Integer.parseInt(scanner.nextLine());
+
+    //⭐지역변수를 생성자에 대입하여 Account 객체 필드 초기화,
+    //위에서 입력받은 지역변수를 Account 클래스에서 선언한 생성자의 매개변수로 대입
+    Account newAccount = new Account(accountNum, owner, balance);
+
+    for(int i = 0; i < accountArray.length; i++) {
+      if(accountArray[i] == null) {
+        accountArray[i] = newAccount; //생성자로 인해 업데이트된 필드를 가진 객체의 주소를 가리키게 한다.
+        System.out.println("결과: 계좌가 생성되었습니다.");
+        break; //객체 배열을 반복하며 자리가 비어있는 곳(null)을 채우면 break문으로 반복을 중지한다.
+      }
+    }
+  }
+  //2.계좌목록
+  private static void accountList() {
+    System.out.println("----------");
+    System.out.println("계좌목록");
+    System.out.println("----------");
+
+    for(int i = 0; i < accountArray.length; i++) {
+      Account account = accountArray[i]; //Account 타입의 account 변수에 객체 배열의 각 요소를 반복하며 대입한다.
+
+      if(account != null) { //객체 배열에 주소값이 할당되어 있다면
+        System.out.print(account.getAccountNum());
+        System.out.print("     ");
+        System.out.print(account.getOwner());
+        System.out.print("     ");
+        System.out.print(account.getBalance());
+        System.out.println();
+      }
+    }
+  }
+  //3.예금
+  private static void deposit() {
+    System.out.println("----------");
+    System.out.println("예금");
+    System.out.println("----------");
+
+    System.out.print("계좌번호: ");
+    String accountNum = scanner.nextLine();
+
+    System.out.print("예금액: ");
+    int money = Integer.parseInt(scanner.nextLine());
+
+    Account account = findAccount(accountNum); //findAccount() 메서드 선언
+
+    if(account == null) {
+      System.out.println("결과: 계좌가 없습니다.");
+      return;
+    } //❗ deposit() 메서드에 account 객체가 정의되어 있지 않아 보이지만, findAccount의 반환값이 account 객체이며
+      //이것이 deposit() 메서드의 account 객체에 할당된다. 그래서 사용할 수 있는 것이다.
+    account.setBalance(account.getBalance() + money);
+    System.out.println("결과: 예금 성공");
+  }
+
+  private static void withdraw() {
+    System.out.println("----------");
+    System.out.println("출금");
+    System.out.println("----------");
+
+    System.out.print("계좌번호: ");
+    String accountNum = scanner.nextLine();
+
+    System.out.println("출금액: ");
+    int money = Integer.parseInt(scanner.nextLine());
+
+    Account account = findAccount(accountNum);
+    if(account == null) {
+      System.out.println("결과: 계좌가 없습니다.");
+      return;
+    }
+    account.setBalance(account.getBalance() - money);
+    System.out.println("결과: 출금 성공");
+  }
+
+  private static Account findAccount(String accountNum) {
+    Account account = null;
+    for(int i = 0; i < accountArray.length; i++) {
+      if(accountArray[i] != null) {
+        String dbAccountNum = accountArray[i].getAccountNum();
+        if(dbAccountNum.equals(accountNum)) { //여기서 accountNum은 메서드의 매개변수
+          account = accountArray[i];
+          break;
+        }
+      }
+    } return account; //❗
+  }
+
+}
 ```
